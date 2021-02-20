@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+  <meta name="format-detection" content="telephone=no">
+<title>전생에 당신을 구해준 약은?</title>
+<meta charset="utf-8">
+<link href="1.css" rel="stylesheet">
+</head>
+
+<body>
+<div id="quiz">
+  <p id="question"> 문제 1) 나른한 오후, 당신은 어떤 일을 하실 건가요?</p>
+  <div class="buttons">
+    <button class="btn" value: "E" onclick="picture();">밖에 나가서 논다</button>
+    <button class="btn" value: "I" onclick="picture();">집이 최고지!</button>
+  </div>
+
+<footer>
+  <p id="progress">문제 1/12</p>
+</footer>
+</div>
+
+
+
+<script>
+
+
+function Question(text, choice, answer){
+  this.text = text;
+  this.choice = choice;
+  this.answer = answer;
+}
+
+function Quiz(questions){
+  this.typeENFP = 0;
+  this.typeENFJ = 0;
+  this.typeENTP = 0;
+  this.typeENTJ = 0;
+  this.typeESFP = 0;
+  this.typeESFJ = 0;
+  this.typeESTP = 0;
+  this.typeESTJ = 0;
+  this.typeINFP = 0;
+  this.typeINFJ = 0;
+  this.typeINTP = 0;
+  this.typeINTJ = 0;
+  this.typeISFP = 0;
+  this.typeISFJ = 0;
+  this.typeISTP = 0;
+  this.typeISTJ = 0;
+  this.questions = questions;
+  this.questionIndex = 0;
+}
+  var questions = [
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['나른한 오후, 당신은 어떤 일을 하실 건가요?','I'], ['E','I']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['E','I'], ['E','I']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['E','I'], ['E','I']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['N','S'], ['N','S']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['N','S'], ['N','S']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['N','S'], ['N','S']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['F','T'], ['F','T']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['F','T'], ['F','T']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['F','T'], ['F','T']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['P','J'], ['P','J']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['P','J'], ['P','J']),
+    new Question('나른한 오후, 당신은 어떤 일을 하실 건가요?', ['P','J'], ['P','J'])
+
+];
+
+var quiz = new Quiz(questions);
+function updateQuiz(){
+  var question = document.getElementById('question');
+  var idx = quiz.questionIndex + 1;
+  var choice = document.querySelectorAll('.btn');
+
+question.innerHTML = '문제'+idx+')'+quiz.questions[quiz.questionIndex].text;
+
+for (var i =0; i<2; i++){
+  choice[i].innerHTML = quiz.questions[quiz.questionIndex].choice[i];
+  choice[i].value = quiz.questions[quiz.questionIndex].answer[i];
+}
+
+progress();
+};
+// 문제 1/11 이런거 쓸 때 사용되는 함수임.
+function progress(){
+  var progress = document.getElementById('progress');
+  progress.innerHTML = '문제'+(quiz.questionIndex+1)+'/'+quiz.questions.length;
+};
+
+var fileNm = ['배경1.png','배경2.png','배경3.png','배경4.png','배경5.png','배경6.png','배경7.png'];
+function picture(){
+  var url = "url("+fileNm[quiz.questionIndex+1]+")";
+  document.querySelector('body').style.backgroundImage = url;
+};
+
+var btn= document.querySelectorAll('.btn');
+
+function checkAnswer(i){
+  btn[i].addEventListener('click',function(){
+    var answer = btn[i].value;
+    if (answer == "E"){
+      quiz.typeENFP++ && quiz.typeENTP++ && quiz.typeESTP++ && quiz.typeESFP++ && quiz.typeENFJ++ && quiz.typeENTJ++ && quiz.typeESTJ++ && quiz.typeESFJ++;
+      }
+      else if (answer == "I"){
+        quiz.typeINFP++ && quiz.typeINTP++ && quiz.typeISTP++ && quiz.typeISFP++ && quiz.typeINFJ++ && quiz.typeINTJ++ && quiz.typeISTJ++ && quiz.typeISFJ++;
+      }
+      else if (answer == "N"){
+        quiz.typeENFP++ && quiz.typeENTP++ && quiz.typeINFP++ && quiz.typeINTP++ &&  quiz.typeENFJ++ && quiz.typeENTJ++ && quiz.typeINFJ++ && quiz.typeINTJ++;
+
+      }
+      else if (answer == "S"){
+        quiz.typeISTP++ && quiz.typeISFP++ && quiz.typeESTP++ && quiz.typeESFP++ &&  quiz.typeISTJ++ && quiz.typeISFJ++ && quiz.typeESTJ++ && quiz.typeESFJ++;
+
+      }
+      else if (answer == "F"){
+        quiz.typeENFP++ && quiz.typeINFP++ && quiz.typeISFP++ && quiz.typeESFP++ &&  quiz.typeENFJ++ && quiz.typeINFJ++ && quiz.typeISFJ++ && quiz.typeESFJ++;
+
+      }
+      else if (answer == "T"){
+        quiz.typeISTP++ && quiz.typeENTP++ && quiz.typeESTP++ && quiz.typeINTP++ &&  quiz.typeISTJ++ && quiz.typeENTJ++ && quiz.typeESTJ++ && quiz.typeINTJ++;
+
+      }
+      else if (answer == "P"){
+        quiz.typeISTP++ && quiz.typeENTP++ && quiz.typeESTP++ && quiz.typeINTP++ &&  quiz.typeENFP++ && quiz.typeINFP++ && quiz.typeISFP++ && quiz.typeESFP++;
+
+      }
+      else if (answer == "J"){
+        quiz.typeENFJ++ && quiz.typeINFJ++ && quiz.typeISFJ++ && quiz.typeESFJ++ &&  quiz.typeISTJ++ && quiz.typeENTJ++ && quiz.typeESTJ++ && quiz.typeINTJ++;
+
+      }
+
+    if (quiz.questionIndex < quiz.questions.length -1){
+      quiz.questionIndex++;
+      updateQuiz();
+    } else{
+      result();
+    }
+  });
+}
+
+function result(){
+  var quizDiv = document.getElementById('quiz');
+  var calcType = Math.max(quiz.typeENFP, quiz.typeENTP, quiz.typeESFP, quiz.typeESTP, quiz.typeINFP, quiz.typeINTP ,quiz.typeISFP, quiz.typeISTP,
+quiz.typeENFJ, quiz.typeENTJ, quiz.typeESFJ, quiz.typeESTJ, quiz.typeINFJ, quiz.typeINTJ ,quiz.typeISFJ, quiz.typeISTJ
+  );
+  var type = "";
+  if (quiz.typeENFP == calcType){
+    type = "ENFP";
+  }
+  if (quiz.typeENTP == calcType){
+    type = "ENTP";
+  }
+  if (quiz.typeESTP == calcType){
+    type = "ESTP";
+  }
+  if (quiz.typeESFP == calcType){
+    type = "ESFP";
+  }
+  if (quiz.typeINFP == calcType){
+    type = "INFP";
+  }
+  if (quiz.typeINTP == calcType){
+    type = "INTP";
+  }
+  if (quiz.typeISFP == calcType){
+    type = "ISFP";
+  }
+  if (quiz.typeISTP == calcType){
+    type = "ISTP";
+  }
+  if (quiz.typeENFJ == calcType){
+    type = "ENFJ";
+  }
+  if (quiz.typeENTJ == calcType){
+    type = "ENTJ";
+  }
+  if (quiz.typeESTJ == calcType){
+    type = "ESTJ";
+  }
+  if (quiz.typeESFJ == calcType){
+    type = "ESFJ";
+  }
+  if (quiz.typeINFJ == calcType){
+    type = "INFJ";
+  }
+  if (quiz.typeINTJ == calcType){
+    type = "INTJ";
+  }
+  if (quiz.typeISFJ == calcType){
+    type = "ISFJ";
+  }
+  if (quiz.typeISTJ == calcType){
+    type = "ISTJ";
+  }
+
+  var txt = '<h1> 결과</h1>' + '<h2 id = "score"> 당신의 유형 :' +type+ '</h2>';
+  quizDiv.innerHTML = txt;
+}
+
+for (var i = 0; i<btn.length; i++){
+  checkAnswer(i);
+}
+updateQuiz();
+
+var screensize = matchMedia('(min-width: 500px)');
+screensize.addListener(changeScreenSize);
+function changeScreenSize(screensize){
+  if (screensize.matches === true){
+
+  }
+}
+
+
+</script>
+</body>
+</html>
